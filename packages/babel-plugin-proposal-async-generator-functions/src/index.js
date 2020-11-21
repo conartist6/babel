@@ -32,7 +32,9 @@ export default declare(api => {
       if (!node.await) return;
 
       const build = rewriteForAwait(path, {
-        getAsyncIterator: file.addHelper("asyncIterator"),
+        getIterator: node.andSync
+          ? file.addHelper("syncAndAsyncIterator")
+          : file.addHelper("asyncIterator"),
       });
 
       const { declar, loop } = build;

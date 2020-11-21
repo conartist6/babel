@@ -98,6 +98,27 @@ helpers.asyncIterator = helper("7.0.0-beta.0")`
   }
 `;
 
+helpers.syncAndAsyncIterator = helper("7.0.0-beta.0")`
+  export default function _syncAndAsyncIterator(iterable) {
+    var method
+    if (typeof Symbol !== "undefined") {
+      if (Symbol.for('syncAndAsyncIterator')) {
+        method = iterable[Symbol.syncAndAsyncIterator]
+        if (method != null) return method.call(iterable);
+      }
+      if (Symbol.asyncIterator) {
+        method = iterable[Symbol.asyncIterator]
+        if (method != null) return method.call(iterable);
+      }
+      if (Symbol.iterator) {
+        method = iterable[Symbol.iterator]
+        if (method != null) return method.call(iterable);
+      }
+    }
+    throw new TypeError("Object is not async? iterable");
+  }
+`;
+
 helpers.AwaitValue = helper("7.0.0-beta.0")`
   export default function _AwaitValue(value) {
     this.wrapped = value;
